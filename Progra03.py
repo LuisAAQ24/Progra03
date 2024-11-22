@@ -1,7 +1,13 @@
+# PROYECTO 3 DE TALLER DE PROGRAMACION
+# SEMESTRE II 2024
+
 import os
 import random
 import sys
 import time
+
+
+# FUNCIONES
 
 
 # Esta función crea el mapa y da inicio al juego
@@ -203,29 +209,92 @@ def strNumero(str):
     return diccionarioNum[str]
 
 
+def instrucciones():
+    pass
 
 
+def info_solarpunk():
+    pass
 
 
+def info_pueblos():
+    pass
+
+
+def info_cabaga():
+    pass
+
+
+def links():
+    pass
+
+
+# MENU
+
+
+def imprimir_banner_bienvenida():
+    print("""
+┌─────────────────────────────────────────────────────────────────────┐
+│ ____                                          _                     │
+│|  _ \ ___  ___ _   _ _ __   ___ _ __ __ _  __| | ___  _ ____  _____ │
+│| |_) / _ \/ __| | | | '_ \ / _ \ '__/ _` |/ _` |/ _ \| '__\ \/ / __|│
+│|  _ <  __/ (__| |_| | |_) |  __/ | | (_| | (_| | (_) | |   >  <\__ \│
+│|_| \_\___|\___|\__,_| .__/ \___|_|_ \__,_|\__,_|\___/|_|  /_/\_\___/│
+│  ___ _ __   |  _ \ _|_| ___(_)___| |_ ___ _ __   ___(_) __ _        │
+│ / _ \ '_ \  | |_) / _ \/ __| / __| __/ _ \ '_ \ / __| |/ _` |       │
+│|  __/ | | | |  _ <  __/\__ \ \__ \ ||  __/ | | | (__| | (_| |       │
+│ \___|_| |_| |_| \_\___||___/_|___/\__\___|_| |_|\___|_|\__,_|       │
+└─────────────────────────────────────────────────────────────────────┘    
+          """)
+    return "                          Menu Principal"
+
+
+def imprimir_menu():
+    print(" 1. Jugar")
+    print(" 2. Instrucciones")
+    print(" 3. Información Sobre Solarpunk")
+    print(" 4. Información Sobre Pueblos Originarios")
+    print(" 5. Información sobre el conflicto en Cabaga, Costa Rica")
+    print(" 6. Links y Texto")
+    print(" 7. Salir")
+
+
+def es_opcion_valida(opcion):
+    """
+    Valida si la opcion es valida como 
+    numero entero y si existe
+    """
+    if isinstance(opcion, int) == False:
+        return False
+    
+    if opcion > 7 or opcion < 1:
+        return False
+    else:
+        return True
 
 
 #Función que muestra el menú principal
-def mostrarMenu():
+def principal():
     """
-    E: Ninguna
-    S: Da inicio al juego o lo finaliza
-    R: Ninguna
+    Punto de Entrada del Programa
+    Imprime el Menu y Da la Seleccion de
+    la Opcion
+    Si la opcion existe y es valida, retorna
+    la funcion relacionada con dicha opcion
     """
-    print("-------------")
-    print("Bienvenido/a al juego")
-    print("-------------")
+    
+    os.system('cls')
+    print(imprimir_banner_bienvenida())
+    imprimir_menu()
     print("")
-    print("1. Iniciar a Jugar")
-    print("2. Instrucciones")
-    print("3. Salir")
-    print("-------------")
-    opcion = input("Ingrese su opción: ")
-    if opcion == "1":
+    
+    opcion = int(input("Seleccione una opcion: "))
+    
+    if es_opcion_valida(opcion) == False:
+        input("Error01, ENTER ")
+        principal()
+    
+    if opcion == 1:
         tamaño = input("Ingrese el tamaño del mapa: ")
         if 2 <= intNumero(tamaño) <= 12:
             iniciar_juego(intNumero(tamaño), 0,[])
@@ -233,15 +302,28 @@ def mostrarMenu():
             print("Seleccione un tamaño entre 2 y 12")
             os.system("cls")
             mostrarMenu()
-            
-    elif opcion == "3":
-        os.system("cls")
-        sys.exit(0)
-    else:
-        print("Opción inválida. Por favor, inténtelo de nuevo.")
-        time.sleep(1)
-        os.system("cls")
-        mostrarMenu()
+    
+    if opcion == 2:
+        instrucciones()
+        
+    if opcion == 3:
+        info_solarpunk()
+        
+    if opcion == 4:
+        info_pueblos()
+        
+    if opcion == 5:
+        info_cabaga()
+        
+    if opcion == 6:
+        links()
+        
+    if opcion == 7:
+        print("Programa Cerrado")
+        return 
 
 
-mostrarMenu()
+# PRINCIPAL
+
+
+principal()
