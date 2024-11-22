@@ -301,7 +301,7 @@ def principal():
         else:
             print("Seleccione un tamaño entre 2 y 12")
             os.system("cls")
-            mostrarMenu()
+            principal()
     
     if opcion == 2:
         instrucciones()
