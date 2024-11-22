@@ -163,12 +163,12 @@ def verificar_victoria(matriz):
             print("Victoria para los indígenas")
             time.sleep(2)
             os.system("cls")
-            mostrarMenu()
+            principal()
         elif all(elemento == 6 for elemento in matriz[fila]):
             print("Victoria para los usurpadores")
             time.sleep(2)
             os.system("cls")
-            mostrarMenu()
+            principal()
 
 
     # Verificar columnas
@@ -177,12 +177,12 @@ def verificar_victoria(matriz):
             print("Victoria para los indígenas")
             time.sleep(2)
             os.system("cls")
-            mostrarMenu()
+            principal()
         elif all(matriz[fila][columna] == 6 for fila in range(tamaño)):
             print("Victoria para los usurpadores")
             time.sleep(2)
             os.system("cls")
-            mostrarMenu()
+            principal()
 
 
 # Conversión de string a número entero
