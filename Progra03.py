@@ -3,14 +3,8 @@
 
 import os
 import random
-import time
 
-
-# FUNCIONES
-
-
-# Esta función crea el mapa y da inicio al juego
-def iniciar_juego(tamaño, ciclo,matriz):
+def iniciar_juego(tamaño, ciclo, matriz):
     """
     E: El tamaño de la matriz y un ciclo inicial (0)
     S: La matriz cuadrada con los cuadros establecidos
@@ -18,20 +12,15 @@ def iniciar_juego(tamaño, ciclo,matriz):
     """
     if ciclo >= tamaño:
         os.system("cls")
-        return crear_juego(matriz, tamaño,1)
+        return crear_juego(matriz, tamaño, 1)
     else:
         # Crear una fila de la matriz usando un bucle
-        fila = []
-        for _ in range(tamaño):
-            fila.append(0)  # Agregar un elemento a la fila
-        # Llamar recursivamente para construir la matriz
-        matriz.append(fila)
-        iniciar_juego(tamaño, ciclo + 1,matriz)
-
-
+        fila = [0] * tamaño  # Inicializa una fila con ceros
+        matriz += [fila]  # Agrega la fila a la matriz
+        iniciar_juego(tamaño, ciclo + 1, matriz)
 
 # Esta función gestiona el juego, mostrando las opciones del jugador y del oponente
-def crear_juego(mapa,tamaño,quien):
+def crear_juego(mapa, tamaño, quien):
     """
     E: Imprime el mapa
     S: Impresión del tablero y estado del juego
@@ -50,77 +39,79 @@ def crear_juego(mapa,tamaño,quien):
         for elemento in fila:
             if elemento == 0:
                 print("[    ]", end=" ")
-            if elemento == 1:
+            elif elemento == 1:
                 print("[ I0 ]", end=" ")
-            if elemento == 2:
+            elif elemento == 2:
                 print("[ P  ]", end=" ")
-            if elemento == 3:
+            elif elemento == 3:
                 print("[ C  ]", end=" ")
-            if elemento == 4:
+            elif elemento == 4:
                 print("[ I1 ]", end=" ")  
-            if elemento == 5:
+            elif elemento == 5:
                 print("[ I2 ]", end=" ")
-            if elemento == 6:
+            elif elemento == 6:
                 print("[ U  ]", end=" ")       
         print()  # Imprime una nueva línea al final de cada fila
     print()  # Línea en blanco para mayor claridad
     verificar_victoria(mapa)
+    
     if quien == 1:
         opcion = input("Ingrese la casilla a modificar en el formato fila, columna: ")
-        fila, columna = map(int, opcion.split(","))
-            
+        fila, columna = [int(x) for x in opcion.split(",")]
+        
         # Verificar si la posición está dentro de los límites de la matriz
         if 0 <= fila < tamaño and 0 <= columna < tamaño:
             print("1. Iniciativa ")
             print("2. Proyecto")
             print("3. Cultura")
             opcion2 = input("¿Qué busca crear?: ")
+            
             if opcion2 == "1":
                 mapa[fila][columna] = 1
                 os.system("cls")
-                crear_juego(mapa, tamaño,0)
-            if opcion2 == "2":
+                crear_juego(mapa, tamaño, 0)
+            elif opcion2 == "2":
                 mapa[fila][columna] = 2
                 os.system("cls")
-                crear_juego(mapa, tamaño,0)
-            if opcion2 == "3":
-                crear_cultura(mapa,fila,columna,tamaño)
+                crear_juego(mapa, tamaño, 0)
+            elif opcion2 == "3":
+                crear_cultura(mapa, fila, columna, tamaño)
             else:
                 print("Seleccione una opción válida")
                 os.system("cls")
-                crear_juego(mapa, tamaño,1)
+                crear_juego(mapa, tamaño, 1)
         else:
             print("La posición está fuera de los límites de la matriz.")
             os.system("cls")
-            crear_juego(mapa, tamaño,1)
+            crear_juego(mapa, tamaño, 1)
     else:
-        tirarOponente(mapa, tamaño//2)
+        tirarOponente(mapa, tamaño // 2)
 
-def crear_cultura(mapa,fila,columna,tamaño):
+def crear_cultura(mapa, fila, columna, tamaño):
     print("1. Expansión vertical")
     print("2. Expansión horizontal")
     opcion = input("Escoja una dirección: ")
+    
     if opcion == "1":  # Expansión vertical
         for i in range(len(mapa)):
-            if mapa[i][columna] in [6,0]:
+            if mapa[i][columna] in [6, 0]:
                 mapa[i][columna] = 3
 
         os.system("cls")
-        crear_juego(mapa, tamaño,0)
+        crear_juego(mapa, tamaño, 0)
 
     elif opcion == "2":  # Expansión horizontal
         for j in range(len(mapa)):
-            if mapa[fila][j] in [6,0]:
+            if mapa[fila][j] in [6, 0]:
                 mapa[fila][j] = 3
+        
         os.system("cls")
-        crear_juego(mapa, tamaño,0)
+        crear_juego(mapa, tamaño, 0)
     
     else:
         print("Opción no válida")
         os.system("cls")
-        crear_juego(mapa, tamaño,1)
-
-
+        crear_juego(mapa, tamaño, 1)
 
 # Función para gestionar el turno del oponente
 def tirarOponente(mapa, tiradas):
@@ -129,55 +120,71 @@ def tirarOponente(mapa, tiradas):
     S: Actualización del tablero tras el turno del oponente
     R: Ninguna
     """
-    time.sleep(1)
-    tamaño = tiradas*2
-
+    
     for _ in range(tiradas):
-        fila = random.randint(0, tamaño - 1)  # Genera un número aleatorio para la fila
-        columna = random.randint(0, tamaño - 1)  # Genera un número aleatorio para la columna
+        fila = random.randint(0, len(mapa) - 1)  
+        columna = random.randint(0, len(mapa) - 1)  
         
         # Cambiar el valor en la posición seleccionada
         if mapa[fila][columna] in [0, 2, 3]:
             mapa[fila][columna] = 6
-            tiradas -=1
+            tiradas -= 1
             print(f"El oponente usurpa la casilla ({fila}, {columna})")
-            time.sleep(1)
-    os.system("cls")
-    crear_juego(mapa, tamaño,1)
     
+    os.system("cls")
+    crear_juego(mapa, len(mapa), 1)
 
 def verificar_victoria(matriz):
     """
     Verifica si al menos una fila o columna de la matriz está compuesta por el mismo valor (1 o 2).
 
     E: matriz (lista de listas)
-    S: True si al menos una fila o columna tiene todos sus elementos iguales a 1 o 2, False en caso contrario
+    S: True si al menos una fila o columna tiene todos sus elementos iguales a 1 o 2,
+       False en caso contrario.
     """
     tamaño = len(matriz)
 
     # Verificar filas
     for fila in range(tamaño):
-        if all(elemento == 2 for elemento in matriz[fila]):
+        victoria_indigenas = True
+        victoria_usurpadores = True
+        
+        for elemento in matriz[fila]:
+            if elemento != 2:
+                victoria_indigenas = False
+            if elemento != 6:
+                victoria_usurpadores = False
+
+        if victoria_indigenas:
             print("Victoria para los indígenas")
             os.system("cls")
             principal()
-        elif all(elemento == 6 for elemento in matriz[fila]):
+        elif victoria_usurpadores:
             print("Victoria para los usurpadores")
             os.system("cls")
             principal()
-
 
     # Verificar columnas
     for columna in range(tamaño):
-        if all(matriz[fila][columna] == 2 for fila in range(tamaño)):
+        victoria_indigenas = True
+        victoria_usurpadores = True
+        
+        for fila in range(tamaño):
+            if matriz[fila][columna] != 2:
+                victoria_indigenas = False
+            if matriz[fila][columna] != 6:
+                victoria_usurpadores = False
+
+        if victoria_indigenas:
             print("Victoria para los indígenas")
             os.system("cls")
             principal()
-        elif all(matriz[fila][columna] == 6 for fila in range(tamaño)):
+        
+        if victoria_usurpadores:
             print("Victoria para los usurpadores")
             os.system("cls")
             principal()
-
+            
 
 # Conversión de string a número entero
 def intNumero(str):
