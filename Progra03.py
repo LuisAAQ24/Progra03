@@ -37,7 +37,6 @@ def crear_juego(mapa,tamaño,quien):
     S: Impresión del tablero y estado del juego
     R: Ninguna
     """
-    time.sleep(1)
     for i in range(tamaño):
         for j in range(tamaño):
             if mapa[i][j] == 1:
@@ -160,12 +159,10 @@ def verificar_victoria(matriz):
     for fila in range(tamaño):
         if all(elemento == 2 for elemento in matriz[fila]):
             print("Victoria para los indígenas")
-            time.sleep(2)
             os.system("cls")
             principal()
         elif all(elemento == 6 for elemento in matriz[fila]):
             print("Victoria para los usurpadores")
-            time.sleep(2)
             os.system("cls")
             principal()
 
@@ -174,12 +171,10 @@ def verificar_victoria(matriz):
     for columna in range(tamaño):
         if all(matriz[fila][columna] == 2 for fila in range(tamaño)):
             print("Victoria para los indígenas")
-            time.sleep(2)
             os.system("cls")
             principal()
         elif all(matriz[fila][columna] == 6 for fila in range(tamaño)):
             print("Victoria para los usurpadores")
-            time.sleep(2)
             os.system("cls")
             principal()
 
