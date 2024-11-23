@@ -56,7 +56,7 @@ def crear_juego(mapa, tamaño, quien):
     verificar_victoria(mapa)
     
     if quien == 1:
-        opcion = input("Ingrese la casilla a modificar en el formato fila, columna: ")
+        opcion = input("Ingrese la casilla a jugar en el formato fila, columna: ")
         fila, columna = [int(x) for x in opcion.split(",")]
         
         # Verificar si la posición está dentro de los límites de la matriz
@@ -156,11 +156,11 @@ def verificar_victoria(matriz):
                 victoria_usurpadores = False
 
         if victoria_indigenas:
-            print("Victoria para los indígenas")
+            input("Victoria para los indigenas, INTRO ")
             os.system("cls")
             principal()
         elif victoria_usurpadores:
-            print("Victoria para los usurpadores")
+            input("Victoria para los usurpadores, INTRO ")
             os.system("cls")
             principal()
 
@@ -211,8 +211,18 @@ def strNumero(str):
 
 
 def instrucciones():
-    pass
-
+    os.system("cls")
+    print("             INSTRUCCIONES DEL JUEGO           ")
+    print(".                                              .\n")
+    print("OBJETIVO DEL JUEGO\nEl objetivo es establecer iniciativas y proyectos culturales en el tablero\nmientras se defiende el territorio de los usurpadores. \nEl juego termina cuando uno de los dos bandos logra completar una fila o columna con \nsus proyectos consolidados o cuando los usurpadores dividen el territorio.\n")
+    print("INICIAR EL JUEGO\nAl comenzar el juego se le pedira al jugador elegir el\ntamaño del tablero, por ejemplo 4 es un tablero 4x4.\nEl tablero se representará como \nuna matriz donde cada celda puede estar vacía, contener una iniciativa (I0), un proyecto (P), cultura (C), o ser usurpada (U).\n")
+    print("TURNOS\nEl juego se juega en turnos alternos entre los pueblos\noriginarios (jugador) y los usurpadores (oponente). El jugador comienza primero.\n")
+    print("PUEBLOS ORIGINARIOS\nEn tu turno, ingresa la casilla que deseas modificar en el formato fila,columna (por ejemplo, 1,2).\nDespués de seleccionar la casilla, se te presentarán tres opciones:\nIniciativa (I0): Marca la casilla como una iniciativa.\nProyecto (P): Marca la casilla como un proyecto.\nCultura (C): Expande la cultura en la dirección que elijas (vertical u horizontal).\n")
+    print("USURPADORES\nEn el turno del oponente, este usurpará aleatoriamente varias casillas del tablero.\nSi un usurpador ocupa una iniciativa o un proyecto, estos serán destruidos.\n")
+    print("VICTORIA\nSi todos los elementos de una fila o columna son iguales a P (Proyecto), el jugador gana.\nSi ocurre lo anterior pero con U (Usurpado), el usurpador gana.")
+    input("Volver? INTRO ")
+    principal()
+    
 
 def info_solarpunk():
     pass
@@ -292,7 +302,7 @@ def principal():
     opcion = int(input("Seleccione una opcion: "))
     
     if es_opcion_valida(opcion) == False:
-        input("Error01, ENTER ")
+        input("Error01, INTRO ")
         principal()
     
     if opcion == 1:
