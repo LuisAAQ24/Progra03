@@ -58,46 +58,47 @@ def crear_juego(mapa, tamaño, quien):
     verificar_victoria(mapa)
     
     if quien == 1:
-    opcion = input("Ingrese la casilla a jugar en el formato fila, columna: ")
+        opcion = input("Ingrese la casilla a jugar en el formato fila, columna: ")
     
     # Inicializar variables
-    fila = 0
-    columna = 0
-    coma_encontrada = False
+        fila = 0
+        columna = 0
+        coma_encontrada = False
     
-    for caracter in opcion:
-        if caracter == ',':
-            coma_encontrada = True
-        elif not coma_encontrada:
-            fila = fila * 10 + int(caracter)  # Construir el número de fila
-        else:
-            columna = columna * 10 + int(caracter)  # Construir el número de columna
+        for caracter in opcion:
+            if caracter == ',':
+                coma_encontrada = True
+            elif not coma_encontrada:
+                fila = fila * 10 + int(caracter)  # Construir el número de fila
+            else:
+                columna = columna * 10 + int(caracter)  # Construir el número de columna
+
 
     # Verificar si la posición está dentro de los límites de la matriz
-    if 0 <= fila < tamaño and 0 <= columna < tamaño:
-        print("1. Iniciativa ")
-        print("2. Proyecto")
-        print("3. Cultura")
-        opcion2 = input("¿Qué busca crear?: ")
+        if 0 <= fila < tamaño and 0 <= columna < tamaño:
+            print("1. Iniciativa ")
+            print("2. Proyecto")
+            print("3. Cultura")
+            opcion2 = input("¿Qué busca crear?: ")
         
-        if opcion2 == "1":
-            mapa[fila][columna] = 1
-            os.system("cls")
-            crear_juego(mapa, tamaño, 0)
-        elif opcion2 == "2":
-            mapa[fila][columna] = 2
-            os.system("cls")
-            crear_juego(mapa, tamaño, 0)
-        elif opcion2 == "3":
-            crear_cultura(mapa, fila, columna, tamaño)
+            if opcion2 == "1":
+                mapa[fila][columna] = 1
+                os.system("cls")
+                crear_juego(mapa, tamaño, 0)
+            elif opcion2 == "2":
+                mapa[fila][columna] = 2
+                os.system("cls")
+                crear_juego(mapa, tamaño, 0)
+            elif opcion2 == "3":
+                crear_cultura(mapa, fila, columna, tamaño)
+            else:
+                print("Seleccione una opción válida")
+                os.system("cls")
+                crear_juego(mapa, tamaño, 1)
         else:
-            print("Seleccione una opción válida")
+            print("La posición está fuera de los límites de la matriz.")
             os.system("cls")
             crear_juego(mapa, tamaño, 1)
-    else:
-        print("La posición está fuera de los límites de la matriz.")
-        os.system("cls")
-        crear_juego(mapa, tamaño, 1)
         
 
 def crear_cultura(mapa, fila, columna, tamaño):
@@ -258,7 +259,9 @@ def info_cabaga():
 
 
 def links():
-    pass
+    print("              BIBLBIOGRAFIA Y OTROS LINKS          ")
+    print("1.")
+    print("Cervera, A. (2020, diciembre 27). Solarpunk: Dibujando un futuro positivo para el planeta -. SIMBIOTIA.\nhttps://www.simbiotia.com/solarpunk/")
 
 
 # MENU
