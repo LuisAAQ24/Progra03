@@ -56,44 +56,60 @@ def crear_juego(mapa, tamaño, quien):
     verificar_victoria(mapa)
     
     if quien == 1:
-    opcion = input("Ingrese la casilla a jugar en el formato fila, columna: ")
-    
-    # Inicializar variables
-    fila = 0
-    columna = 0
-    coma_encontrada = False
-
-    for caracter in opcion:
-        if caracter == ',':
-            coma_encontrada = True
-        elif not coma_encontrada:
-            fila = fila * 10 + int(caracter)  # Construir el número de fila
-        else:
-            columna = columna * 10 + int(caracter)  # Construir el número de columna
-
-    # Verificar si la posición está dentro de los límites de la matriz
-    if 0 <= fila < tamaño and 0 <= columna < tamaño:
-        print("1. Iniciativa ")
-        print("2. Proyecto")
-        print("3. Cultura")
-        opcion2 = input("¿Qué busca crear?: ")
+        opcion = input("Ingrese la casilla a jugar en el formato fila, columna: ")
+        fila, columna = [int(x) for x in opcion.split(",")]
         
-        if opcion2 == "1":
-            mapa[fila][columna] = 1
-            os.system("cls")
-            crear_juego(mapa, tamaño, 0)
-        elif opcion2 == "2":
-            mapa[fila][columna] = 2
-            os.system("cls")
-            crear_juego(mapa, tamaño, 0)
-        elif opcion2 == "3":
-            crear_cultura(mapa, fila, columna, tamaño)
+        # Verificar si la posición está dentro de los límites de la matriz
+        if 0 <= fila < tamaño and 0 <= columna < tamaño:
+            print("1. Iniciativa ")
+            print("2. Proyecto")
+            print("3. Cultura")
+            opcion2 = input("¿Qué busca crear?: ")
+            
+            if opcion2 == "1":
+                mapa[fila][columna] = 1
+                os.system("cls")
+                crear_juego(mapa, tamaño, 0)
+            elif opcion2 == "2":
+                mapa[fila][columna] = 2
+                os.system("cls")
+                crear_juego(mapa, tamaño, 0)
+            elif opcion2 == "3":
+                crear_cultura(mapa, fila, columna, tamaño)
+            else:
+                print("Seleccione una opción válida")
+                os.system("cls")
+                crear_juego(mapa, tamaño, 1)
         else:
-            print("Seleccione una opción válida")
+            print("La posición está fuera de los límites de la matriz.")
             os.system("cls")
             crear_juego(mapa, tamaño, 1)
     else:
-        print("La posición está fuera de los límites de la matriz.")
+        tirarOponente(mapa, tamaño // 2)
+
+def crear_cultura(mapa, fila, columna, tamaño):
+    print("1. Expansión vertical")
+    print("2. Expansión horizontal")
+    opcion = input("Escoja una dirección: ")
+    
+    if opcion == "1":  # Expansión vertical
+        for i in range(len(mapa)):
+            if mapa[i][columna] in [6, 0]:
+                mapa[i][columna] = 3
+
+        os.system("cls")
+        crear_juego(mapa, tamaño, 0)
+
+    elif opcion == "2":  # Expansión horizontal
+        for j in range(len(mapa)):
+            if mapa[fila][j] in [6, 0]:
+                mapa[fila][j] = 3
+        
+        os.system("cls")
+        crear_juego(mapa, tamaño, 0)
+    
+    else:
+        print("Opción no válida")
         os.system("cls")
         crear_juego(mapa, tamaño, 1)
 
@@ -209,7 +225,15 @@ def instrucciones():
     
 
 def info_solarpunk():
-    pass
+    os.system("cls")
+    print("                  INFORMACION SOBRE SOLARPUNK                  ")
+    print("""
+El Solarpunk es un movimiento cultural que propone un futuro optimista y conectando la naturaleza con la tecnología. Presenta\nrespuestas a los problemas medioambientales actuales, promoviendo un futuro sostenible\nmediante el uso de la tecnología. A diferencia de otros géneros tales como el cyberpunk\no el steampunk los cuales a menudo presentan visiones pesimistas, el Solarpunk se enfoca en la simbiosis\nentre el ser humano y la\nnaturaleza. Segun Cervera A. (2020), "el solarpunk es un movimiento que aspira a lograr cierta simbiosis entre hombre y naturaleza con el objetivo de despertar y \nprofundizar la sensibilidad ecológica del individuo y, en consecuencia, de la sociedad en general."
+
+Este movimiento surgió en Brasil, 2012, relatos que exploraban un mundo sostenible, su popularidad crecio gracias al internet, \nespecialmente con el manifesto de Adam Flynn en 2014. 
+
+Cuenta con unas variantes similares y relacionadas como el greenpunk, el cual busca una sociedad mas verde y justa y \nel biopunk que se centra mas en las implicaciones de la biotecnología y las éticas que conllevan. 
+          """)
 
 
 def info_pueblos():
