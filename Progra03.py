@@ -3,7 +3,7 @@
 
 import os
 import random
-
+import time
 
 def iniciar_juego(tamaño, ciclo, matriz):
     """
@@ -69,9 +69,9 @@ def crear_juego(mapa, tamaño, quien):
             if caracter == ',':
                 coma_encontrada = True
             elif not coma_encontrada:
-                fila = fila * 10 + int(caracter)  # Construir el número de fila
+                fila = int(caracter)  # Construir el número de fila
             else:
-                columna = columna * 10 + int(caracter)  # Construir el número de columna
+                columna = int(caracter)  # Construir el número de columna
 
 
     # Verificar si la posición está dentro de los límites de la matriz
@@ -80,16 +80,10 @@ def crear_juego(mapa, tamaño, quien):
             print("2. Proyecto")
             print("3. Cultura")
             opcion2 = input("¿Qué busca crear?: ")
-        
-            if opcion2 == "1":
-                mapa[fila][columna] = 1
-                os.system("cls")
-                crear_juego(mapa, tamaño, 0)
-            elif opcion2 == "2":
-                mapa[fila][columna] = 2
-                os.system("cls")
-                crear_juego(mapa, tamaño, 0)
-            elif opcion2 == "3":
+            intopcion = int(opcion2)
+            if 0 < intopcion < 3 :
+                validacion(fila, columna, intopcion, mapa, tamaño)
+            elif intopcion == 3:
                 crear_cultura(mapa, fila, columna, tamaño)
             else:
                 print("Seleccione una opción válida")
@@ -99,7 +93,20 @@ def crear_juego(mapa, tamaño, quien):
             print("La posición está fuera de los límites de la matriz.")
             os.system("cls")
             crear_juego(mapa, tamaño, 1)
-        
+    else:
+        tirarOponente(mapa, tamaño//2)
+
+
+def validacion(fila, columna, valor, mapa, tamaño):
+    if mapa[fila][columna] in [1,2,4,5]:
+        print("Ya existe algo en esta posición")
+        time.sleep(1)
+        os.system("cls")
+        crear_juego(mapa, tamaño, 1)
+    else:
+        mapa[fila][columna] = valor
+        os.system("cls")
+        crear_juego(mapa, tamaño, 0)
 
 def crear_cultura(mapa, fila, columna, tamaño):
     print("1. Expansión vertical")
@@ -107,18 +114,38 @@ def crear_cultura(mapa, fila, columna, tamaño):
     opcion = input("Escoja una dirección: ")
     
     if opcion == "1":  # Expansión vertical
-        for i in range(len(mapa)):
+
+        for i in range(fila, -1, -1): 
             if mapa[i][columna] in [6, 0]:
                 mapa[i][columna] = 3
+            else:
+                break 
+
+
+        for i in range(fila + 1, len(mapa)): 
+            if mapa[i][columna] in [6, 0]:
+                mapa[i][columna] = 3
+            else:
+                break  
 
         os.system("cls")
         crear_juego(mapa, tamaño, 0)
 
-    elif opcion == "2":  # Expansión horizontal
-        for j in range(len(mapa)):
+    elif opcion == "2":  #horizontal
+
+        for j in range(columna, -1, -1): 
             if mapa[fila][j] in [6, 0]:
                 mapa[fila][j] = 3
-        
+            else:
+                break  
+
+
+        for j in range(columna + 1, len(mapa[fila])): 
+            if mapa[fila][j] in [6, 0]:
+                mapa[fila][j] = 3
+            else:
+                break 
+
         os.system("cls")
         crear_juego(mapa, tamaño, 0)
     
@@ -134,16 +161,24 @@ def tirarOponente(mapa, tiradas):
     S: Actualización del tablero tras el turno del oponente
     R: Ninguna
     """
-    
-    for _ in range(tiradas):
-        fila = random.randint(0, len(mapa) - 1)  
-        columna = random.randint(0, len(mapa) - 1)  
+ 
+    while tiradas > 0:
         
-        # Cambiar el valor en la posición seleccionada
-        if mapa[fila][columna] in [0, 2, 3]:
+        for fila in range(len(mapa)):
+            for columna in range(len(mapa)):
+                if mapa[fila][columna] == 2:
+                    mapa[fila][columna] = 6
+                    print(f"El oponente usurpa la casilla ({fila}, {columna})")
+                    tiradas -= 1
+                    time.sleep(1)
+        
+        fila = random.randint(0, len(mapa) - 1)  
+        columna = random.randint(0, len(mapa) - 1) 
+        if mapa[fila][columna] in [0, 3]:
             mapa[fila][columna] = 6
             tiradas -= 1
             print(f"El oponente usurpa la casilla ({fila}, {columna})")
+            time.sleep(1)
     
     os.system("cls")
     crear_juego(mapa, len(mapa), 1)
@@ -171,10 +206,12 @@ def verificar_victoria(matriz):
 
         if victoria_indigenas:
             input("Victoria para los indigenas, INTRO ")
+            time.sleep(2)
             os.system("cls")
             principal()
         elif victoria_usurpadores:
             input("Victoria para los usurpadores, INTRO ")
+            time.sleep(2)
             os.system("cls")
             principal()
 
@@ -191,37 +228,18 @@ def verificar_victoria(matriz):
 
         if victoria_indigenas:
             print("Victoria para los indígenas")
+            time.sleep(2)
             os.system("cls")
             principal()
         
         if victoria_usurpadores:
             print("Victoria para los usurpadores")
+            time.sleep(2)
             os.system("cls")
             principal()
             
 
-# Conversión de string a número entero
-def intNumero(str):
-    """
-    E: Un string numérico
-    S: El valor numérico correspondiente
-    R: Ninguna
-    """
-    diccionarioNum = {"1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9, "0": 0,
-                       "10": 10, "11": 11, "12": 12, "13": 13, "14": 14, "15": 15, "16": 16, "17": 17, "18": 18, "19": 19, "20": 20}
-    return diccionarioNum[str]
 
-
-#Conversión de un int a str
-def strNumero(str):
-    """
-    E: Un str
-    S: El str en forma de int
-    R: Que sea un str
-    """
-    diccionarioNum = {1: "1", 2: "2", 3: "3", 4: "4",
-                      5: "5", 6: "6", 7: "7", 8: "8", 9: "9", 0: "0"}
-    return diccionarioNum[str]
 
 
 def instrucciones():
@@ -233,7 +251,7 @@ def instrucciones():
     print("TURNOS\nEl juego se juega en turnos alternos entre los pueblos\noriginarios (jugador) y los usurpadores (oponente). El jugador comienza primero.\n")
     print("PUEBLOS ORIGINARIOS\nEn tu turno, ingresa la casilla que deseas modificar en el formato fila,columna (por ejemplo, 1,2).\nDespués de seleccionar la casilla, se te presentarán tres opciones:\nIniciativa (I0): Marca la casilla como una iniciativa.\nProyecto (P): Marca la casilla como un proyecto.\nCultura (C): Expande la cultura en la dirección que elijas (vertical u horizontal).\n")
     print("USURPADORES\nEn el turno del oponente, este usurpará aleatoriamente varias casillas del tablero.\nSi un usurpador ocupa una iniciativa o un proyecto, estos serán destruidos.\n")
-    print("VICTORIA\nSi todos los elementos de una fila o columna son iguales a P (Proyecto), el jugador gana.\nSi ocurre lo anterior pero con U (Usurpado), el usurpador gana.")
+    print("VICTORIA\nSi todos los elementos de una fila o columna son iguales a P (Proyecto), el jugador gana.\nSi ocurre lo anterior pero con U (Usurpado), el usurpador gana.\n")
     input("Volver? INTRO ")
     principal()
     
@@ -251,19 +269,49 @@ Cuenta con unas variantes similares y relacionadas como el greenpunk, el cual bu
 
 
 def info_pueblos():
-    pass
+    os.system("cls")
+    print("          PUEBLOS ORIGINARIOS          ")
+    print("""
+Los pueblos indígenas son grupos sociales y culturales que mantienen vínculos ancestrales con \nsus territorios y recursos naturales. Se estima que hay aproximadamente 476 millones de personas indígenas en el mundo, lo que representa \nalrededor del 6% de la población global, aunque constituyen cerca del 19% de las personas que viven en \ncondiciones de extrema pobreza.\n
+Segun Ivers, L:
+"Los pueblos indígenas a menudo carecen de reconocimiento formal de sus tierras, \nterritorios y recursos naturales, suelen ser los últimos en recibir inversiones \npúblicas en servicios básicos e infraestructura y enfrentan múltiples obstáculos para participar plenamente en la economía formal, obtener acceso a la justicia y ser parte de \nlos procesos políticos y la toma de decisiones." (s.f.)\n
+En las últimas décadas, ha habido un creciente reconocimiento internacional de los derechos indígenas, reflejado en \ninstrumentos como la Declaración de las Naciones \nUnidas sobre los Derechos de los Pueblos Indígenas (UNDRIP) y el Acuerdo de Escazú.\n
+Aunque los pueblos originarios / indigenas enfrentan numerosos desafos en la actualdad, tambien son protectores esenciales de la \nbiodiversidad, ademas de apoortar gran parte de algunas culturas en diiversos pases.
+          """)
+    input("Volver? INTRO ")
+    principal()
 
 
 def info_cabaga():
-    pass
+    os.system("cls")
+    print("        INFORMACION SOBRE EL CONFLICTO DE CABAGRA, CR          ")
+    print("""
+En 2020 el Consejo de Mayores de Cabagra denuncio la entrada de personas no indigenas, armadas en areas recuperadas por las\ncomunidades indigenas, lo que ha generaado preocupacion por la escala de violencia. 
+
+Segun Mora, A:
+"La denuncia la realizó el Frente Nacional de Pueblos Indígenas (FRENAPI) que señaló mediante un comunicado que la tarde de\neste domingo 23 de febrero, el Consejo de Mayores del territorio de Cabagra informó sobre una movilización de personas no indígenas (sikuas, que es el vocablo con el que los pueblos indígenas se refieren al resto de la población) que entraron armados\na las zonas de Térraba, Crun D'bonn y Cabagra en Palmira, donde se encuentran las últimas tierras recuperadas por las personas indígenas." (s.f.)
+
+Este conflicto no es nada nuevo en estos territorios y tampoco en el pais en general, se extiende a todas las zonas indigenas\ndel pais. "Las tierras de estos territorios son inalienables e imprescriptibles, no transferibles\ny exclusivas para las comunidades indígenas que las habitan" y que "los no indígenas no podrán alquilar, arrendar, comprar o de cualquier otra manera\nadquirir terrenos o fincas comprendidas dentro de estas reservas" (Ley ndigenaa 6172 de 1977, Articulo 3)
+
+Segun Mora, A:
+"Sin embargo, durante años dichas tierras han sido ocupadas por personas no indígenas que se hicieron de las terrenos de\ndiversas formas, ya sea poseyéndolas a la fuerza o comprándolas a pesar de que esto sea ilegal.\nEsto ha generado, principalmente después de que los pueblos indígenas decidiesen unirse para recuperar sus territorios (en el proceso que llaman "recuperación de tierras") una\nescalada en la violencia en la zona que llegó incluso a provocar el homicidio del líder bribri Sergio Rojas Ortíz, a inicios del año pasado." (s.f.)
+
+          """)
+    input("Volver? INTRO ")
+    principal()
 
 
 def links():
+    os.system("cls")
     print("              BIBLBIOGRAFIA Y OTROS LINKS          ")
     print("1.")
-    print("Cervera, A. (2020, diciembre 27). Solarpunk: Dibujando un futuro positivo para el planeta -. SIMBIOTIA.\nhttps://www.simbiotia.com/solarpunk/")
-
-
+    print("Cervera, A. (2020, diciembre 27). Solarpunk: Dibujando un futuro positivo para el planeta -. SIMBIOTIA. \nhttps://www.simbiotia.com/solarpunk/\n")
+    print("2.")
+    print("Mora, A. (s/f). Conflictos en territorios indígenas salen de Salitre y llegan también a Cabagra. \nRecuperado el 23 de noviembre de 2024, de https://delfino.cr/2020/02/conflictos-en-territorios-indigenas-salen-de-salitre-y-llegan-tambien-a-cabagra\n")
+    print("3.")
+    print("Ivers, L. (s/f). Pueblos indígenas: Panorama general [Text/HTML]. World Bank. \nRecuperado el 23 de noviembre de 2024, de https://www.bancomundial.org/es/topic/indigenouspeoples\n")
+    input("Volver? INTRO ")
+    principal()
 # MENU
 
 
@@ -331,10 +379,11 @@ def principal():
     
     if opcion == 1:
         tamaño = input("Ingrese el tamaño del mapa: ")
-        if 2 <= intNumero(tamaño) <= 12:
-            iniciar_juego(intNumero(tamaño), 0,[])
+        if 3 <= int(tamaño) <= 12:
+            iniciar_juego(int(tamaño), 0,[])
         else:
-            print("Seleccione un tamaño entre 2 y 12")
+            print("Seleccione un tamaño entre 3 y 12")
+            time.sleep(1)
             os.system("cls")
             principal()
     
