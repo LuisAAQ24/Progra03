@@ -62,8 +62,7 @@ def crear_juego(mapa, tamaño, quien):
     fila = 0
     columna = 0
     coma_encontrada = False
-    
-    # Procesar la entrada sin usar .split()
+
     for caracter in opcion:
         if caracter == ',':
             coma_encontrada = True
