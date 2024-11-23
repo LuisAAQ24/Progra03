@@ -4,6 +4,7 @@
 import os
 import random
 
+
 def iniciar_juego(tamaño, ciclo, matriz):
     """
     E: El tamaño de la matriz y un ciclo inicial (0)
@@ -18,6 +19,7 @@ def iniciar_juego(tamaño, ciclo, matriz):
         fila = [0] * tamaño  # Inicializa una fila con ceros
         matriz += [fila]  # Agrega la fila a la matriz
         iniciar_juego(tamaño, ciclo + 1, matriz)
+
 
 # Esta función gestiona el juego, mostrando las opciones del jugador y del oponente
 def crear_juego(mapa, tamaño, quien):
@@ -56,36 +58,47 @@ def crear_juego(mapa, tamaño, quien):
     verificar_victoria(mapa)
     
     if quien == 1:
-        opcion = input("Ingrese la casilla a jugar en el formato fila, columna: ")
-        fila, columna = [int(x) for x in opcion.split(",")]
-        
-        # Verificar si la posición está dentro de los límites de la matriz
-        if 0 <= fila < tamaño and 0 <= columna < tamaño:
-            print("1. Iniciativa ")
-            print("2. Proyecto")
-            print("3. Cultura")
-            opcion2 = input("¿Qué busca crear?: ")
-            
-            if opcion2 == "1":
-                mapa[fila][columna] = 1
-                os.system("cls")
-                crear_juego(mapa, tamaño, 0)
-            elif opcion2 == "2":
-                mapa[fila][columna] = 2
-                os.system("cls")
-                crear_juego(mapa, tamaño, 0)
-            elif opcion2 == "3":
-                crear_cultura(mapa, fila, columna, tamaño)
-            else:
-                print("Seleccione una opción válida")
-                os.system("cls")
-                crear_juego(mapa, tamaño, 1)
+    opcion = input("Ingrese la casilla a jugar en el formato fila, columna: ")
+    
+    # Inicializar variables
+    fila = 0
+    columna = 0
+    coma_encontrada = False
+    
+    for caracter in opcion:
+        if caracter == ',':
+            coma_encontrada = True
+        elif not coma_encontrada:
+            fila = fila * 10 + int(caracter)  # Construir el número de fila
         else:
-            print("La posición está fuera de los límites de la matriz.")
+            columna = columna * 10 + int(caracter)  # Construir el número de columna
+
+    # Verificar si la posición está dentro de los límites de la matriz
+    if 0 <= fila < tamaño and 0 <= columna < tamaño:
+        print("1. Iniciativa ")
+        print("2. Proyecto")
+        print("3. Cultura")
+        opcion2 = input("¿Qué busca crear?: ")
+        
+        if opcion2 == "1":
+            mapa[fila][columna] = 1
+            os.system("cls")
+            crear_juego(mapa, tamaño, 0)
+        elif opcion2 == "2":
+            mapa[fila][columna] = 2
+            os.system("cls")
+            crear_juego(mapa, tamaño, 0)
+        elif opcion2 == "3":
+            crear_cultura(mapa, fila, columna, tamaño)
+        else:
+            print("Seleccione una opción válida")
             os.system("cls")
             crear_juego(mapa, tamaño, 1)
     else:
-        tirarOponente(mapa, tamaño // 2)
+        print("La posición está fuera de los límites de la matriz.")
+        os.system("cls")
+        crear_juego(mapa, tamaño, 1)
+        
 
 def crear_cultura(mapa, fila, columna, tamaño):
     print("1. Expansión vertical")
