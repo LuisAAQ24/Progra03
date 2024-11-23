@@ -154,6 +154,7 @@ def crear_cultura(mapa, fila, columna, tamaño):
         os.system("cls")
         crear_juego(mapa, tamaño, 1)
 
+
 # Función para gestionar el turno del oponente
 def tirarOponente(mapa, tiradas):
     """
@@ -182,6 +183,7 @@ def tirarOponente(mapa, tiradas):
     
     os.system("cls")
     crear_juego(mapa, len(mapa), 1)
+
 
 def verificar_victoria(matriz):
     """
@@ -252,6 +254,7 @@ def instrucciones():
     print("PUEBLOS ORIGINARIOS\nEn tu turno, ingresa la casilla que deseas modificar en el formato fila,columna (por ejemplo, 1,2).\nDespués de seleccionar la casilla, se te presentarán tres opciones:\nIniciativa (I0): Marca la casilla como una iniciativa.\nProyecto (P): Marca la casilla como un proyecto.\nCultura (C): Expande la cultura en la dirección que elijas (vertical u horizontal).\n")
     print("USURPADORES\nEn el turno del oponente, este usurpará aleatoriamente varias casillas del tablero.\nSi un usurpador ocupa una iniciativa o un proyecto, estos serán destruidos.\n")
     print("VICTORIA\nSi todos los elementos de una fila o columna son iguales a P (Proyecto), el jugador gana.\nSi ocurre lo anterior pero con U (Usurpado), el usurpador gana.\n")
+    print("VICTORIA\nSi todos los elementos de una fila o columna son iguales a P (Proyecto), el jugador gana.\nSi ocurre lo anterior pero con U (Usurpado), el usurpador gana.\n")
     input("Volver? INTRO ")
     principal()
     
@@ -266,6 +269,8 @@ Este movimiento surgió en Brasil, 2012, relatos que exploraban un mundo sosteni
 
 Cuenta con unas variantes similares y relacionadas como el greenpunk, el cual busca una sociedad mas verde y justa y \nel biopunk que se centra mas en las implicaciones de la biotecnología y las éticas que conllevan. 
           """)
+    input("Volver? INTRO ")
+    principal()
 
 
 def info_pueblos():
@@ -282,7 +287,7 @@ Aunque los pueblos originarios / indigenas enfrentan numerosos desafos en la act
     principal()
 
 
-def info_cabaga():
+def info_cabagra():
     os.system("cls")
     print("        INFORMACION SOBRE EL CONFLICTO DE CABAGRA, CR          ")
     print("""
@@ -312,6 +317,8 @@ def links():
     print("Ivers, L. (s/f). Pueblos indígenas: Panorama general [Text/HTML]. World Bank. \nRecuperado el 23 de noviembre de 2024, de https://www.bancomundial.org/es/topic/indigenouspeoples\n")
     input("Volver? INTRO ")
     principal()
+    
+
 # MENU
 
 
@@ -347,7 +354,7 @@ def es_opcion_valida(opcion):
     Valida si la opcion es valida como 
     numero entero y si existe
     """
-    if isinstance(opcion, int) == False:
+    if isinstance(opcion, int) == False: 
         return False
     
     if opcion > 7 or opcion < 1:
@@ -397,7 +404,7 @@ def principal():
         info_pueblos()
         
     if opcion == 5:
-        info_cabaga()
+        info_cabagra()
         
     if opcion == 6:
         links()
