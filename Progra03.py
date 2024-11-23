@@ -127,6 +127,7 @@ def crear_cultura(mapa, fila, columna, tamaño):
         os.system("cls")
         crear_juego(mapa, tamaño, 1)
 
+
 # Función para gestionar el turno del oponente
 def tirarOponente(mapa, tiradas):
     """
@@ -147,6 +148,7 @@ def tirarOponente(mapa, tiradas):
     
     os.system("cls")
     crear_juego(mapa, len(mapa), 1)
+
 
 def verificar_victoria(matriz):
     """
@@ -233,7 +235,7 @@ def instrucciones():
     print("TURNOS\nEl juego se juega en turnos alternos entre los pueblos\noriginarios (jugador) y los usurpadores (oponente). El jugador comienza primero.\n")
     print("PUEBLOS ORIGINARIOS\nEn tu turno, ingresa la casilla que deseas modificar en el formato fila,columna (por ejemplo, 1,2).\nDespués de seleccionar la casilla, se te presentarán tres opciones:\nIniciativa (I0): Marca la casilla como una iniciativa.\nProyecto (P): Marca la casilla como un proyecto.\nCultura (C): Expande la cultura en la dirección que elijas (vertical u horizontal).\n")
     print("USURPADORES\nEn el turno del oponente, este usurpará aleatoriamente varias casillas del tablero.\nSi un usurpador ocupa una iniciativa o un proyecto, estos serán destruidos.\n")
-    print("VICTORIA\nSi todos los elementos de una fila o columna son iguales a P (Proyecto), el jugador gana.\nSi ocurre lo anterior pero con U (Usurpado), el usurpador gana.")
+    print("VICTORIA\nSi todos los elementos de una fila o columna son iguales a P (Proyecto), el jugador gana.\nSi ocurre lo anterior pero con U (Usurpado), el usurpador gana.\n")
     input("Volver? INTRO ")
     principal()
     
@@ -248,21 +250,55 @@ Este movimiento surgió en Brasil, 2012, relatos que exploraban un mundo sosteni
 
 Cuenta con unas variantes similares y relacionadas como el greenpunk, el cual busca una sociedad mas verde y justa y \nel biopunk que se centra mas en las implicaciones de la biotecnología y las éticas que conllevan. 
           """)
+    input("Volver? INTRO ")
+    principal()
 
 
 def info_pueblos():
-    pass
+    os.system("cls")
+    print("          PUEBLOS ORIGINARIOS          ")
+    print("""
+Los pueblos indígenas son grupos sociales y culturales que mantienen vínculos ancestrales con \nsus territorios y recursos naturales. Se estima que hay aproximadamente 476 millones de personas indígenas en el mundo, lo que representa \nalrededor del 6% de la población global, aunque constituyen cerca del 19% de las personas que viven en \ncondiciones de extrema pobreza.\n
+Segun Ivers, L:
+"Los pueblos indígenas a menudo carecen de reconocimiento formal de sus tierras, \nterritorios y recursos naturales, suelen ser los últimos en recibir inversiones \npúblicas en servicios básicos e infraestructura y enfrentan múltiples obstáculos para participar plenamente en la economía formal, obtener acceso a la justicia y ser parte de \nlos procesos políticos y la toma de decisiones." (s.f.)\n
+En las últimas décadas, ha habido un creciente reconocimiento internacional de los derechos indígenas, reflejado en \ninstrumentos como la Declaración de las Naciones \nUnidas sobre los Derechos de los Pueblos Indígenas (UNDRIP) y el Acuerdo de Escazú.\n
+Aunque los pueblos originarios / indigenas enfrentan numerosos desafos en la actualdad, tambien son protectores esenciales de la \nbiodiversidad, ademas de apoortar gran parte de algunas culturas en diiversos pases.
+          """)
+    input("Volver? INTRO ")
+    principal()
 
 
-def info_cabaga():
-    pass
+def info_cabagra():
+    os.system("cls")
+    print("        INFORMACION SOBRE EL CONFLICTO DE CABAGRA, CR          ")
+    print("""
+En 2020 el Consejo de Mayores de Cabagra denuncio la entrada de personas no indigenas, armadas en areas recuperadas por las\ncomunidades indigenas, lo que ha generaado preocupacion por la escala de violencia. 
+
+Segun Mora, A:
+"La denuncia la realizó el Frente Nacional de Pueblos Indígenas (FRENAPI) que señaló mediante un comunicado que la tarde de\neste domingo 23 de febrero, el Consejo de Mayores del territorio de Cabagra informó sobre una movilización de personas no indígenas (sikuas, que es el vocablo con el que los pueblos indígenas se refieren al resto de la población) que entraron armados\na las zonas de Térraba, Crun D'bonn y Cabagra en Palmira, donde se encuentran las últimas tierras recuperadas por las personas indígenas." (s.f.)
+
+Este conflicto no es nada nuevo en estos territorios y tampoco en el pais en general, se extiende a todas las zonas indigenas\ndel pais. "Las tierras de estos territorios son inalienables e imprescriptibles, no transferibles\ny exclusivas para las comunidades indígenas que las habitan" y que "los no indígenas no podrán alquilar, arrendar, comprar o de cualquier otra manera\nadquirir terrenos o fincas comprendidas dentro de estas reservas" (Ley ndigenaa 6172 de 1977, Articulo 3)
+
+Segun Mora, A:
+"Sin embargo, durante años dichas tierras han sido ocupadas por personas no indígenas que se hicieron de las terrenos de\ndiversas formas, ya sea poseyéndolas a la fuerza o comprándolas a pesar de que esto sea ilegal.\nEsto ha generado, principalmente después de que los pueblos indígenas decidiesen unirse para recuperar sus territorios (en el proceso que llaman "recuperación de tierras") una\nescalada en la violencia en la zona que llegó incluso a provocar el homicidio del líder bribri Sergio Rojas Ortíz, a inicios del año pasado." (s.f.)
+
+          """)
+    input("Volver? INTRO ")
+    principal()
 
 
 def links():
+    os.system("cls")
     print("              BIBLBIOGRAFIA Y OTROS LINKS          ")
     print("1.")
-    print("Cervera, A. (2020, diciembre 27). Solarpunk: Dibujando un futuro positivo para el planeta -. SIMBIOTIA.\nhttps://www.simbiotia.com/solarpunk/")
-
+    print("Cervera, A. (2020, diciembre 27). Solarpunk: Dibujando un futuro positivo para el planeta -. SIMBIOTIA. \nhttps://www.simbiotia.com/solarpunk/\n")
+    print("2.")
+    print("Mora, A. (s/f). Conflictos en territorios indígenas salen de Salitre y llegan también a Cabagra. \nRecuperado el 23 de noviembre de 2024, de https://delfino.cr/2020/02/conflictos-en-territorios-indigenas-salen-de-salitre-y-llegan-tambien-a-cabagra\n")
+    print("3.")
+    print("Ivers, L. (s/f). Pueblos indígenas: Panorama general [Text/HTML]. World Bank. \nRecuperado el 23 de noviembre de 2024, de https://www.bancomundial.org/es/topic/indigenouspeoples\n")
+    input("Volver? INTRO ")
+    principal()
+    
 
 # MENU
 
@@ -299,7 +335,7 @@ def es_opcion_valida(opcion):
     Valida si la opcion es valida como 
     numero entero y si existe
     """
-    if isinstance(opcion, int) == False:
+    if isinstance(opcion, int) == False: 
         return False
     
     if opcion > 7 or opcion < 1:
@@ -348,7 +384,7 @@ def principal():
         info_pueblos()
         
     if opcion == 5:
-        info_cabaga()
+        info_cabagra()
         
     if opcion == 6:
         links()
