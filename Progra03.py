@@ -4,7 +4,7 @@
 import os
 import random
 import time
-
+#crea el mapa inicial y ejecuta el juego
 def iniciar_juego(tamaño, ciclo, matriz):
     """
     E: El tamaño de la matriz y un ciclo inicial (0)
@@ -12,14 +12,29 @@ def iniciar_juego(tamaño, ciclo, matriz):
     R: Una matriz cuadrada 
     """
     if ciclo >= tamaño:
-        os.system("cls")
-        return crear_juego(matriz, tamaño, 1)
+        os.system("clear")
+        return introduccion(matriz, tamaño, 1)
     else:
         # Crear una fila de la matriz usando un bucle
         fila = [0] * tamaño  # Inicializa una fila con ceros
         matriz += [fila]  # Agrega la fila a la matriz
         iniciar_juego(tamaño, ciclo + 1, matriz)
 
+def introduccion(matriz, tamaño, quien):
+    print("Tu comunidad ha habitado y utilizado las tierras que tradicionalmente les pertenecen desde hace generaciones.\n"
+          "Sin embargo, un nuevo desafío se presenta en el horizonte. Usurpadores han llegado a tus tierras, "
+          "deseando apoderarse de los recursos que han sido cultivados y protegidos por tu gente durante siglos.\n")
+    time.sleep(3)
+    print("Estos forasteros traen consigo promesas de progreso, pero sus intenciones son oscuras y su ambición, insaciable.\n"
+          "Es momento de actuar. Tu comunidad debe unirse y desarrollar proyectos e iniciativas que fortalezcan "
+          "su presencia y defiendan su hogar. Desde la construcción de infraestructuras hasta la creación de "
+          "programas de educación y sostenibilidad, cada decisión cuenta.\n")
+    time.sleep(3)
+    print("¿Estás listo para liderar a tu comunidad en esta lucha por la supervivencia y la prosperidad? "
+          "El futuro de tus tierras depende de ti y de tus acciones.\n")
+    time.sleep(3)
+    os.system("clear")
+    crear_juego(matriz, tamaño, quien)
 
 # Esta función gestiona el juego, mostrando las opciones del jugador y del oponente
 def crear_juego(mapa, tamaño, quien):
@@ -87,25 +102,25 @@ def crear_juego(mapa, tamaño, quien):
                 crear_cultura(mapa, fila, columna, tamaño)
             else:
                 print("Seleccione una opción válida")
-                os.system("cls")
+                os.system("clear")
                 crear_juego(mapa, tamaño, 1)
         else:
-            print("La posición está fuera de los límites de la matriz.")
-            os.system("cls")
+            print("La posición está fuera de los límites del mapa.")
+            os.system("clear")
             crear_juego(mapa, tamaño, 1)
     else:
         tirarOponente(mapa, tamaño//2)
 
-
+#verifica el input del usuario
 def validacion(fila, columna, valor, mapa, tamaño):
     if mapa[fila][columna] in [1,2,4,5]:
         print("Ya existe algo en esta posición")
         time.sleep(1)
-        os.system("cls")
+        os.system("clear")
         crear_juego(mapa, tamaño, 1)
     else:
         mapa[fila][columna] = valor
-        os.system("cls")
+        os.system("clear")
         crear_juego(mapa, tamaño, 0)
 
 def crear_cultura(mapa, fila, columna, tamaño):
@@ -128,7 +143,7 @@ def crear_cultura(mapa, fila, columna, tamaño):
             else:
                 break  
 
-        os.system("cls")
+        os.system("clear")
         crear_juego(mapa, tamaño, 0)
 
     elif opcion == "2":  #horizontal
@@ -146,30 +161,30 @@ def crear_cultura(mapa, fila, columna, tamaño):
             else:
                 break 
 
-        os.system("cls")
+        os.system("clear")
         crear_juego(mapa, tamaño, 0)
     
     else:
         print("Opción no válida")
-        os.system("cls")
+        os.system("clear")
         crear_juego(mapa, tamaño, 1)
 
 
 # Función para gestionar el turno del oponente
 def tirarOponente(mapa, tiradas):
     """
-    E: Mapa, resultado del dado, estado de las piezas
+    E: Ninguna
     S: Actualización del tablero tras el turno del oponente
     R: Ninguna
     """
- 
+    print("Turno de los usurpadores")
     while tiradas > 0:
         
         for fila in range(len(mapa)):
             for columna in range(len(mapa)):
                 if mapa[fila][columna] == 2:
                     mapa[fila][columna] = 6
-                    print(f"El oponente usurpa la casilla ({fila}, {columna})")
+                    print(f"Los usurpadores se establecen en ({fila}, {columna})")
                     tiradas -= 1
                     time.sleep(1)
         
@@ -178,13 +193,13 @@ def tirarOponente(mapa, tiradas):
         if mapa[fila][columna] in [0, 3]:
             mapa[fila][columna] = 6
             tiradas -= 1
-            print(f"El oponente usurpa la casilla ({fila}, {columna})")
+            print(f"Los ususrpadores se establecen en ({fila}, {columna})")
             time.sleep(1)
     
-    os.system("cls")
+    os.system("clear")
     crear_juego(mapa, len(mapa), 1)
 
-
+#función que verifica si alguien ha ganado
 def verificar_victoria(matriz):
     """
     Verifica si al menos una fila o columna de la matriz está compuesta por el mismo valor (1 o 2).
@@ -207,14 +222,14 @@ def verificar_victoria(matriz):
                 victoria_usurpadores = False
 
         if victoria_indigenas:
-            input("Victoria para los indigenas, INTRO ")
+            input("Felicidades, lograste repeler a los invasores")
             time.sleep(2)
-            os.system("cls")
+            os.system("clear")
             principal()
         elif victoria_usurpadores:
-            input("Victoria para los usurpadores, INTRO ")
+            input("Fallaste en proteger las tierras de tu gente")
             time.sleep(2)
-            os.system("cls")
+            os.system("clear")
             principal()
 
     # Verificar columnas
@@ -231,21 +246,21 @@ def verificar_victoria(matriz):
         if victoria_indigenas:
             print("Victoria para los indígenas")
             time.sleep(2)
-            os.system("cls")
+            os.system("clear")
             principal()
         
         if victoria_usurpadores:
             print("Victoria para los usurpadores")
             time.sleep(2)
-            os.system("cls")
+            os.system("clear")
             principal()
             
 
 
 
-
+#Instrucciones del juego
 def instrucciones():
-    os.system("cls")
+    os.system("clear")
     print("             INSTRUCCIONES DEL JUEGO           ")
     print(".                                              .\n")
     print("OBJETIVO DEL JUEGO\nEl objetivo es establecer iniciativas y proyectos culturales en el tablero\nmientras se defiende el territorio de los usurpadores. \nEl juego termina cuando uno de los dos bandos logra completar una fila o columna con \nsus proyectos consolidados o cuando los usurpadores dividen el territorio.\n")
@@ -257,9 +272,9 @@ def instrucciones():
     input("Volver? INTRO ")
     principal()
     
-
+#Información sobre solarpunk
 def info_solarpunk():
-    os.system("cls")
+    os.system("clear")
     print("                  INFORMACION SOBRE SOLARPUNK                  ")
     print("""
 El Solarpunk es un movimiento cultural que propone un futuro optimista y conectando la naturaleza con la tecnología. Presenta\nrespuestas a los problemas medioambientales actuales, promoviendo un futuro sostenible\nmediante el uso de la tecnología. A diferencia de otros géneros tales como el cyberpunk\no el steampunk los cuales a menudo presentan visiones pesimistas, el Solarpunk se enfoca en la simbiosis\nentre el ser humano y la\nnaturaleza. Segun Cervera A. (2020), "el solarpunk es un movimiento que aspira a lograr cierta simbiosis entre hombre y naturaleza con el objetivo de despertar y \nprofundizar la sensibilidad ecológica del individuo y, en consecuencia, de la sociedad en general."
@@ -271,9 +286,9 @@ Cuenta con unas variantes similares y relacionadas como el greenpunk, el cual bu
     input("Volver? INTRO ")
     principal()
 
-
+#Información de pueblos originarios
 def info_pueblos():
-    os.system("cls")
+    os.system("clear")
     print("          PUEBLOS ORIGINARIOS          ")
     print("""
 Los pueblos indígenas son grupos sociales y culturales que mantienen vínculos ancestrales con \nsus territorios y recursos naturales. Se estima que hay aproximadamente 476 millones de personas indígenas en el mundo, lo que representa \nalrededor del 6% de la población global, aunque constituyen cerca del 19% de las personas que viven en \ncondiciones de extrema pobreza.\n
@@ -285,9 +300,9 @@ Aunque los pueblos originarios / indigenas enfrentan numerosos desafos en la act
     input("Volver? INTRO ")
     principal()
 
-
+#Información sobre el conflicto de Cabagra
 def info_cabagra():
-    os.system("cls")
+    os.system("clear")
     print("        INFORMACION SOBRE EL CONFLICTO DE CABAGRA, CR          ")
     print("""
 En 2020 el Consejo de Mayores de Cabagra denuncio la entrada de personas no indigenas, armadas en areas recuperadas por las\ncomunidades indigenas, lo que ha generaado preocupacion por la escala de violencia. 
@@ -304,9 +319,9 @@ Segun Mora, A:
     input("Volver? INTRO ")
     principal()
 
-
+#Información
 def links():
-    os.system("cls")
+    os.system("clear")
     print("              BIBLBIOGRAFIA Y OTROS LINKS          ")
     print("1.")
     print("Cervera, A. (2020, diciembre 27). Solarpunk: Dibujando un futuro positivo para el planeta -. SIMBIOTIA. \nhttps://www.simbiotia.com/solarpunk/\n")
@@ -343,7 +358,7 @@ def imprimir_menu():
     print(" 2. Instrucciones")
     print(" 3. Información Sobre Solarpunk")
     print(" 4. Información Sobre Pueblos Originarios")
-    print(" 5. Información sobre el conflicto en Cabaga, Costa Rica")
+    print(" 5. Información sobre el conflicto en Cabagra, Costa Rica")
     print(" 6. Links y Texto")
     print(" 7. Salir")
 
@@ -372,7 +387,7 @@ def principal():
     la funcion relacionada con dicha opcion
     """
     
-    os.system('cls')
+    os.system('clear')
     print(imprimir_banner_bienvenida())
     imprimir_menu()
     print("")
@@ -390,7 +405,7 @@ def principal():
         else:
             print("Seleccione un tamaño entre 3 y 12")
             time.sleep(1)
-            os.system("cls")
+            os.system("clear")
             principal()
     
     if opcion == 2:
